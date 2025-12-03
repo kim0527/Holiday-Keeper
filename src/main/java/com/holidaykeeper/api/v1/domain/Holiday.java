@@ -53,21 +53,21 @@ public class Holiday extends BaseEntity {
 
   @ElementCollection
   @CollectionTable(
-      name = "counties",
+      name = "holiday_country",
       joinColumns = @JoinColumn(name = "holiday_id")
   )
-  @Column(name = "counties")
-  private List<String> counties = new ArrayList<>();
+  @Column(name = "country")
+  private List<String> countries = new ArrayList<>();
 
   @Column(name = "launch_year")
   private Integer launchYear;
 
   @ElementCollection
   @CollectionTable(
-      name = "types",
+      name = "holiday_type",
       joinColumns = @JoinColumn(name = "holiday_id")
   )
-  @Column(name = "types")
+  @Column(name = "type")
   private List<HolidayType> types = new ArrayList<>();
 
   @Builder
@@ -78,7 +78,7 @@ public class Holiday extends BaseEntity {
       String name,
       Boolean fixed,
       Boolean global,
-      List<String> counties,
+      List<String> countries,
       Integer launchYear,
       List<HolidayType> types
   ) {
@@ -88,7 +88,7 @@ public class Holiday extends BaseEntity {
     this.name = name;
     this.fixed = fixed;
     this.global = global;
-    this.counties = counties;
+    this.countries = countries;
     this.launchYear = launchYear;
     this.types = types;
   }
