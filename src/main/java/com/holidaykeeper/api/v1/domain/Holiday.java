@@ -1,5 +1,6 @@
 package com.holidaykeeper.api.v1.domain;
 
+import com.holidaykeeper.api.v1.domain.common.BaseEntity;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;

@@ -1,4 +1,4 @@
-package com.holidaykeeper.api.v1.domain;
+package com.holidaykeeper.api.v1.domain.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
