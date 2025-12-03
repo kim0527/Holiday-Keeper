@@ -20,4 +20,12 @@ public class BaseEntity {
   @LastModifiedDate
   private LocalDateTime modifiedAt;
 
+  private Boolean isDeleted = Boolean.FALSE;
+
+  private LocalDateTime deletedAt;
+
+  public void delete() {
+    this.isDeleted = Boolean.TRUE;
+    this.deletedAt = LocalDateTime.now();
+  }
 }

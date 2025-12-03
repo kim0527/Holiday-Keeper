@@ -43,10 +43,12 @@ public class HolidayJdbcRepositoryImpl implements HolidayJdbcRepository {
           launch_year,
           types_json, 
           created_at,
-          modified_at
+          modified_at,
+          is_deleted,
+          deleted_at
         )
         KEY(country_id, date, name)
-        VALUES (?, (SELECT country_id FROM country WHERE country_code = ?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, (SELECT country_id FROM country WHERE country_code = ?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """;
 
     LocalDateTime now = LocalDateTime.now();
@@ -74,6 +76,8 @@ public class HolidayJdbcRepositoryImpl implements HolidayJdbcRepository {
           statement.setString(10, toJson(holiday.types()));
           statement.setObject(11, now);
           statement.setObject(12, now);
+          statement.setObject(13, false);
+          statement.setObject(14, null);
         });
   }
 

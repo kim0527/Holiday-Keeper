@@ -33,10 +33,12 @@ public class CountryJdbcRepositoryImpl implements CountryJdbcRepository {
           country_code, 
           country_name, 
           created_at, 
-          modified_at
+          modified_at,
+          is_deleted,
+          deleted_at
         )
         KEY(country_code)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
     """;
 
     LocalDateTime now = LocalDateTime.now();
@@ -57,6 +59,8 @@ public class CountryJdbcRepositoryImpl implements CountryJdbcRepository {
           statement.setString(3, country.name());
           statement.setObject(4, now);
           statement.setObject(5, now);
+          statement.setObject(6, false);
+          statement.setObject(7, null);
         });
   }
 
