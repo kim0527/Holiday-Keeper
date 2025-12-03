@@ -1,9 +1,7 @@
 package com.holidaykeeper.api.v1.domain;
 
 import com.holidaykeeper.api.v1.domain.common.BaseEntity;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -11,8 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.sql.Types;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,10 +35,10 @@ public class Holiday extends BaseEntity {
   @Column(name = "date", nullable = false)
   private LocalDate date;
 
-  @Column(name = "local_name", nullable = false, length = 100)
+  @Column(name = "local_name", nullable = false)
   private String localName;
 
-  @Column(name = "name", nullable = false, length = 100)
+  @Column(name = "name", nullable = false)
   private String name;
 
   @Column(name = "fixed", nullable = false)
@@ -51,24 +47,14 @@ public class Holiday extends BaseEntity {
   @Column(name = "global", nullable = false)
   private Boolean global;
 
-  @ElementCollection
-  @CollectionTable(
-      name = "holiday_country",
-      joinColumns = @JoinColumn(name = "holiday_id")
-  )
-  @Column(name = "country")
-  private List<String> countries = new ArrayList<>();
+  @Column(name = "counties_json", columnDefinition = "TEXT")
+  private String countiesJson;
 
   @Column(name = "launch_year")
   private Integer launchYear;
 
-  @ElementCollection
-  @CollectionTable(
-      name = "holiday_type",
-      joinColumns = @JoinColumn(name = "holiday_id")
-  )
-  @Column(name = "type")
-  private List<HolidayType> types = new ArrayList<>();
+  @Column(name = "types_json", columnDefinition = "TEXT")
+  private String typesJson;
 
   @Builder
   private Holiday(
@@ -78,9 +64,9 @@ public class Holiday extends BaseEntity {
       String name,
       Boolean fixed,
       Boolean global,
-      List<String> countries,
+      String countiesJson,
       Integer launchYear,
-      List<HolidayType> types
+      String typesJson
   ) {
     this.country = country;
     this.date = date;
@@ -88,9 +74,9 @@ public class Holiday extends BaseEntity {
     this.name = name;
     this.fixed = fixed;
     this.global = global;
-    this.countries = countries;
+    this.countiesJson = countiesJson;
     this.launchYear = launchYear;
-    this.types = types;
+    this.typesJson = typesJson;
   }
 
 }
