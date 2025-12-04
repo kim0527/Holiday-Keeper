@@ -2,6 +2,7 @@ package com.holidaykeeper.api.v1.application.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeast;
@@ -21,8 +22,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -44,8 +43,8 @@ public class AppInitServiceMockTest {
   @InjectMocks
   private AppInitService appInitService;
 
-  @Captor
-  private ArgumentCaptor<List<GetHolidayResponse>> holidayCaptor;
+//  @Captor
+//  private ArgumentCaptor<List<GetHolidayResponse>> holidayCaptor;
 
   @BeforeEach
   void setUp() {
@@ -78,7 +77,7 @@ public class AppInitServiceMockTest {
 
     // then
     // [2020년 ~ 2025년] 6 x 2 = 12개, 배치 사이즈 = 3, 총 토탈 호출 횟수 = 12 / 3 = 4
-    verify(holidayJdbcRepository, atLeast(4));
+    verify(holidayJdbcRepository, atLeast(4)).save(anyList());
   }
 
   @Test
