@@ -13,8 +13,8 @@ import static org.mockito.Mockito.when;
 import com.holidaykeeper.api.v1.Infrastructure.external.client.ApiClient;
 import com.holidaykeeper.api.v1.Infrastructure.external.client.response.GetCountryResponse;
 import com.holidaykeeper.api.v1.Infrastructure.external.client.response.GetHolidayResponse;
-import com.holidaykeeper.api.v1.Infrastructure.respoitory.country.CountryJdbcRepository;
-import com.holidaykeeper.api.v1.Infrastructure.respoitory.holiday.HolidayJdbcRepository;
+import com.holidaykeeper.api.v1.Infrastructure.respoitory.country.CountryRepository;
+import com.holidaykeeper.api.v1.Infrastructure.respoitory.holiday.HolidayRepository;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -32,10 +32,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 public class AppInitServiceMockTest {
 
   @Mock
-  private CountryJdbcRepository countryJdbcRepository;
+  private CountryRepository countryRepository;
 
   @Mock
-  private HolidayJdbcRepository holidayJdbcRepository;
+  private HolidayRepository holidayRepository;
 
   @Mock
   private ApiClient apiClient;
@@ -77,7 +77,7 @@ public class AppInitServiceMockTest {
 
     // then
     // [2020년 ~ 2025년] 6 x 2 = 12개, 배치 사이즈 = 3, 총 토탈 호출 횟수 = 12 / 3 = 4
-    verify(holidayJdbcRepository, atLeast(4)).save(anyList());
+    verify(holidayRepository, atLeast(4)).save(anyList());
   }
 
   @Test

@@ -3,8 +3,8 @@ package com.holidaykeeper.api.v1.application.service;
 import com.holidaykeeper.api.v1.Infrastructure.external.client.ApiClient;
 import com.holidaykeeper.api.v1.Infrastructure.external.client.response.GetCountryResponse;
 import com.holidaykeeper.api.v1.Infrastructure.external.client.response.GetHolidayResponse;
-import com.holidaykeeper.api.v1.Infrastructure.respoitory.country.CountryJdbcRepository;
-import com.holidaykeeper.api.v1.Infrastructure.respoitory.holiday.HolidayJdbcRepository;
+import com.holidaykeeper.api.v1.Infrastructure.respoitory.country.CountryRepository;
+import com.holidaykeeper.api.v1.Infrastructure.respoitory.holiday.HolidayRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AppInitService {
 
-  private final CountryJdbcRepository countryJdbcRepository;
-  private final HolidayJdbcRepository holidayJdbcRepository;
+  private final CountryRepository countryRepository;
+  private final HolidayRepository holidayRepository;
   private final ApiClient apiClient;
 
   private static final int FROM_YEAR = 2020;
@@ -40,12 +40,12 @@ public class AppInitService {
     long start = System.currentTimeMillis();
     // 1. 국가 조회 후 저장
     List<GetCountryResponse> countries = getCountriesWithRetry();
-    countryJdbcRepository.save(countries);
+    countryRepository.save(countries);
     // 2. 공휴일 조회 후 저장
     List<GetHolidayResponse> totalHolidays = getHolidays(countries);
     for (int i = 0; i < totalHolidays.size(); i += batchSize) {
       int end = Math.min(i + batchSize, totalHolidays.size());
-      holidayJdbcRepository.save(totalHolidays.subList(i, end));
+      holidayRepository.save(totalHolidays.subList(i, end));
     }
     log.info("{}년부터 {}년까지 모든 국가의 공휴일 정보 적재 완료 (소요시간 : {}ms)", FROM_YEAR, TO_YEAR, System.currentTimeMillis() - start);
   }

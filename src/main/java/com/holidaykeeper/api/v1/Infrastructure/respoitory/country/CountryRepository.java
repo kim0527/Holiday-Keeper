@@ -4,5 +4,5 @@ import com.holidaykeeper.api.v1.domain.Country;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CountryJpaRepository extends JpaRepository<Country, UUID> {
+public interface CountryRepository extends JpaRepository<Country, UUID>, CountryJdbcRepository{
 }
