@@ -10,6 +10,7 @@ import com.holidaykeeper.api.v1.domain.Holiday;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -89,12 +90,10 @@ public class HolidayService implements HolidayUsecase {
   @Transactional
   public void refreshHolidays(String countryCode, int year) {
     Map<HolidayKey, GetHolidayResponse> apiHolidays = fetchHolidaysAsMap(countryCode, year);
-    log.info("apiHolidays : {}개", apiHolidays.size());
     Map<HolidayKey, Holiday> persistHolidays = getPersistHolidaysAsMap(countryCode, year);
-    log.info("persistHolidays : {}개", persistHolidays.size());
 
     List<GetHolidayResponse> toInsert = new ArrayList<>();
-    List<Holiday> toUpdate = new ArrayList<>();
+    Map<Holiday,GetHolidayResponse> toUpdate = new HashMap<>();
     List<Holiday> toDelete = new ArrayList<>();
 
     categorizeHolidaysToInsertAndUpdate(apiHolidays, persistHolidays, toInsert, toUpdate);
@@ -153,7 +152,7 @@ public class HolidayService implements HolidayUsecase {
       Map<HolidayKey, GetHolidayResponse> apiHolidays,
       Map<HolidayKey, Holiday> persistHolidays,
       List<GetHolidayResponse> toInsert,
-      List<Holiday> toUpdate
+      Map<Holiday,GetHolidayResponse> toUpdate
   ) {
     apiHolidays.forEach((key, apiHoliday) -> {
       Holiday holiday = persistHolidays.get(key);
@@ -168,7 +167,7 @@ public class HolidayService implements HolidayUsecase {
             apiHoliday.launchYear(),
             apiHoliday.types())
         ) {
-          toUpdate.add(holiday);
+          toUpdate.put(holiday, apiHoliday);
         }
       } else {
         toInsert.add(apiHoliday);

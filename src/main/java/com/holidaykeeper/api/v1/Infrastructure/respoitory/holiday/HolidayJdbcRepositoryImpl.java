@@ -6,7 +6,9 @@ import com.holidaykeeper.api.v1.domain.Holiday;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,35 +66,36 @@ public class HolidayJdbcRepositoryImpl implements HolidayJdbcRepository {
   }
 
   @Override
-  public void bulkUpdate(List<Holiday> holidays) {
-    if (holidays == null || holidays.isEmpty()) {
+  public void bulkUpdate(Map<Holiday, GetHolidayResponse> holidayUpdateMap) {
+    if (holidayUpdateMap == null || holidayUpdateMap.isEmpty()) {
       log.warn("업데이트할 holiday 데이터가 존재하지 않습니다.");
       return;
     }
 
     String query = """
-        UPDATE holiday 
-        SET 
-          date = ?,
-          local_name = ?,
-          name = ?,
-          fixed = ?,
-          global = ?,
-          counties_json = ?,
-          launch_year = ?,
-          types_json = ?,
-          modified_at = ?
-        WHERE holiday_id = ?
-    """;
+      UPDATE holiday 
+      SET 
+        date = ?,
+        local_name = ?,
+        name = ?,
+        fixed = ?,
+        global = ?,
+        counties_json = ?,
+        launch_year = ?,
+        types_json = ?,
+        modified_at = ?
+      WHERE holiday_id = ?
+  """;
 
     LocalDateTime now = LocalDateTime.now();
+    List<Map.Entry<Holiday, GetHolidayResponse>> holidays = new ArrayList<>(holidayUpdateMap.entrySet());
 
     for (int i = 0; i < holidays.size(); i += batchSize) {
       int endIndex = Math.min(i + batchSize, holidays.size());
-      List<Holiday> batch = holidays.subList(i, endIndex);
+      List<Map.Entry<Holiday, GetHolidayResponse>> batch = holidays.subList(i, endIndex);
 
       jdbcTemplate.batchUpdate(query, batch, batch.size(),
-          (statement, holiday) -> setUpdateParameters(statement, holiday, now));
+          (statement, entry) -> setUpdateParameters(statement, entry.getKey(), entry.getValue(), now));
     }
   }
 
@@ -147,16 +150,17 @@ public class HolidayJdbcRepositoryImpl implements HolidayJdbcRepository {
   private void setUpdateParameters(
       PreparedStatement statement,
       Holiday holiday,
+      GetHolidayResponse apiHoliday,
       LocalDateTime now
   ) throws SQLException {
-    statement.setObject(1, holiday.getDate());
-    statement.setString(2, holiday.getLocalName());
-    statement.setString(3, holiday.getName());
-    statement.setBoolean(4, holiday.getFixed());
-    statement.setBoolean(5, holiday.getGlobal());
-    statement.setString(6, holiday.getCountiesJson());
-    statement.setObject(7, holiday.getLaunchYear());
-    statement.setString(8, holiday.getTypesJson());
+    statement.setObject(1, apiHoliday.date());
+    statement.setString(2, apiHoliday.localName());
+    statement.setString(3, apiHoliday.name());
+    statement.setBoolean(4, apiHoliday.fixed());
+    statement.setBoolean(5, apiHoliday.global());
+    statement.setString(6, JsonUtil.toJson(apiHoliday.counties()));
+    statement.setObject(7, apiHoliday.launchYear());
+    statement.setString(8, JsonUtil.toJson(apiHoliday.types()));
     statement.setObject(9, now);
     statement.setObject(10, holiday.getId());
   }
