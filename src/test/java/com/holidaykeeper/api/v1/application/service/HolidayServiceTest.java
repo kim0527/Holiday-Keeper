@@ -379,4 +379,22 @@ public class HolidayServiceTest {
     assertThat(updatedHolidays).hasSize(1);  // 기존에 25년 KR의 공휴일은 2개(설날, 근로자의 날)였으나, 근로자의 날이 삭제되어 1개만 남음.
   }
 
+  @Test
+  @DisplayName("특정 연도·국가의 공휴일을 전체 삭제할 수 있다.")
+  void deleteHolidays() {
+    // given
+    String countryCode = "KR";
+    int year = 2025;
+
+    // when
+    holidayService.deleteHolidays(countryCode,year);
+
+    entityManager.flush();
+    entityManager.clear();
+
+    // then
+    List<Holiday> updatedHolidays = holidayRepository.findByCountryCodeAndYear(countryCode, year);
+    assertThat(updatedHolidays).hasSize(0);
+  }
+
 }
