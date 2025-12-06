@@ -35,6 +35,7 @@ public class HolidayQuerydslRepositoryImpl implements HolidayQuerydslRepository 
     year.ifPresent(y -> where.and(holiday.date.year().eq(y)));
     countryCode.ifPresent(code -> where.and(country.code.eq(code)));
     holidayType.ifPresent(type -> where.and(holiday.typesJson.contains("\"" + type + "\"")));
+    where.and(holiday.isDeleted.eq(false));
 
     Long total = jpaQueryFactory
         .select(holiday.count())
