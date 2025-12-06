@@ -40,13 +40,10 @@ public class AppInitService {
     long start = System.currentTimeMillis();
     // 1. 국가 조회 후 저장
     List<GetCountryResponse> countries = getCountriesWithRetry();
-    countryRepository.save(countries);
+    countryRepository.bulkInsert(countries);
     // 2. 공휴일 조회 후 저장
     List<GetHolidayResponse> totalHolidays = getHolidays(countries);
-    for (int i = 0; i < totalHolidays.size(); i += batchSize) {
-      int end = Math.min(i + batchSize, totalHolidays.size());
-      holidayRepository.save(totalHolidays.subList(i, end));
-    }
+    batchInsertHolidays(totalHolidays);
     log.info("{}년부터 {}년까지 모든 국가의 공휴일 정보 적재 완료 (소요시간 : {}ms)", FROM_YEAR, TO_YEAR, System.currentTimeMillis() - start);
   }
 
@@ -97,5 +94,16 @@ public class AppInitService {
       }
     }
     return Collections.emptyList();
+  }
+
+  private void batchInsertHolidays(List<GetHolidayResponse> holidays) {
+    if (holidays.isEmpty()) {
+      return;
+    }
+    for (int i = 0; i < holidays.size(); i += batchSize) {
+      int endIndex = Math.min(i + batchSize, holidays.size());
+      List<GetHolidayResponse> batch = holidays.subList(i, endIndex);
+      holidayRepository.bulkInsert(batch);
+    }
   }
 }

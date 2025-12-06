@@ -4,5 +4,5 @@ import com.holidaykeeper.api.v1.Infrastructure.external.client.response.GetCount
 import java.util.List;
 
 public interface CountryJdbcRepository {
-  void save(List<GetCountryResponse> countries);
+  void bulkInsert(List<GetCountryResponse> countries);
 }

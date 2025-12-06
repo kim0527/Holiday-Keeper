@@ -21,7 +21,7 @@ public class CountryJdbcRepositoryImpl implements CountryJdbcRepository {
   private int batchSize;
 
   @Override
-  public void save(List<GetCountryResponse> countries) {
+  public void bulkInsert(List<GetCountryResponse> countries) {
     if (countries == null || countries.isEmpty()) {
       log.warn("countries 데이터가 존재하지 않습니다.");
       return;

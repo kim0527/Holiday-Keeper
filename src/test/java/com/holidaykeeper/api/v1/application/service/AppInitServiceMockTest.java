@@ -77,7 +77,7 @@ public class AppInitServiceMockTest {
 
     // then
     // [2020년 ~ 2025년] 6 x 2 = 12개, 배치 사이즈 = 3, 총 토탈 호출 횟수 = 12 / 3 = 4
-    verify(holidayRepository, atLeast(4)).save(anyList());
+    verify(holidayRepository, atLeast(4)).bulkInsert(anyList());
   }
 
   @Test
