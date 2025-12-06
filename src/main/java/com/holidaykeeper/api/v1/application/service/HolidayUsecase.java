@@ -14,4 +14,5 @@ public interface HolidayUsecase {
       Optional<Integer> page,
       Optional<Integer> size
   );
+  void refreshHolidays(String countryCode, int year);
 }
