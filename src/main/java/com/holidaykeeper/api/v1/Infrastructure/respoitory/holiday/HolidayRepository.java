@@ -13,6 +13,7 @@ public interface HolidayRepository extends JpaRepository<Holiday, UUID>, Holiday
     JOIN FETCH h.country c
     WHERE c.code = :countryCode
       AND YEAR(h.date) = :year
+      AND h.isDeleted = FALSE
   """)
   List<Holiday> findByCountryCodeAndYear(String countryCode, int year);
 }
