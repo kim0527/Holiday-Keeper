@@ -14,4 +14,27 @@ public record GetHolidayResponse(
     Integer launchYear,
     List<String> types
 ) {
+  public static GetHolidayResponse of(
+      LocalDate date,
+      String localName,
+      String name,
+      String countryCode,
+      Boolean fixed,
+      Boolean global,
+      List<String> counties,
+      Integer launchYear,
+      List<String> types
+  ) {
+    return new GetHolidayResponse(
+        date,
+        localName,
+        name,
+        countryCode,
+        fixed,
+        global,
+        counties,
+        launchYear,
+        types
+    );
+  }
 }
