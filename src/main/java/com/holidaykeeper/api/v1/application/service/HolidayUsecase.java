@@ -15,4 +15,5 @@ public interface HolidayUsecase {
       Optional<Integer> size
   );
   void refreshHolidays(String countryCode, int year);
+  void deleteHolidays(String countryCode, int year);
 }

@@ -43,6 +43,7 @@ public class HolidayService implements HolidayUsecase {
   @Value("${app.batch.size}")
   private int batchSize;
 
+  @Override
   public Pagination<HolidayResponse> searchHoliday(
       Optional<Integer> year,
       Optional<String> countryCode,
@@ -87,6 +88,7 @@ public class HolidayService implements HolidayUsecase {
     );
   }
 
+  @Override
   @Transactional
   public void refreshHolidays(String countryCode, int year) {
     Map<HolidayKey, GetHolidayResponse> apiHolidays = fetchHolidaysAsMap(countryCode, year);
@@ -204,5 +206,12 @@ public class HolidayService implements HolidayUsecase {
     public int hashCode() {
       return Objects.hash(date, name);
     }
+  }
+
+  @Override
+  @Transactional
+  public void deleteHolidays(String countryCode, int year) {
+    List<Holiday> holidays = holidayRepository.findByCountryCodeAndYear(countryCode, year);
+    holidayRepository.bulkDelete(holidays);
   }
 }

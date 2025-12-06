@@ -8,6 +8,7 @@ import com.holidaykeeper.api.v1.common.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,16 @@ public class HolidayController {
   ) {
     holidayUsecase.refreshHolidays(countryCode, year);
     return ResponseEntity.status(HttpStatus.OK)
-        .body(ApiResponse.success(null,"갱신 성공"));
+        .body(ApiResponse.success(null,"공휴일 재동기화 완료 ( countryCode: %s, year: %d )".formatted(countryCode,year)));
+  }
+
+  @DeleteMapping("/{countryCode}/{year}")
+  public ResponseEntity<ApiResponse> deleteHolidays(
+      @PathVariable String countryCode,
+      @PathVariable int year
+  ) {
+    holidayUsecase.deleteHolidays(countryCode, year);
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(ApiResponse.success(null,"공휴일 일괄 삭제 완료 ( countryCode: %s, year: %d )".formatted(countryCode,year)));
   }
 }
