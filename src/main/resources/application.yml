@@ -32,3 +32,8 @@ app:
     size: 50
   api:
     retry_count: 3
+
+springdoc:
+  swagger-ui:
+    path: /holiday-keeper-apis
+    tags-sorter: alpha
