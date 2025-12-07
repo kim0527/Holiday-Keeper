@@ -139,10 +139,6 @@ public class HolidayService implements HolidayUsecase {
     categorizeHolidaysToInsertAndUpdate(apiHolidays, persistHolidays, toInsert, toUpdate);
     findHolidaysToDelete(apiHolidays, persistHolidays, toDelete);
 
-    log.info("toInsert : {}개", toInsert.size());
-    log.info("toUpdate : {}개", toUpdate.size());
-    log.info("toDelete : {}개", toDelete.size());
-
     if (!toInsert.isEmpty()) {
       holidayRepository.bulkInsert(toInsert);
     }
