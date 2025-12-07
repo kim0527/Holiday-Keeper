@@ -43,9 +43,6 @@ public class AppInitServiceMockTest {
   @InjectMocks
   private AppInitService appInitService;
 
-//  @Captor
-//  private ArgumentCaptor<List<GetHolidayResponse>> holidayCaptor;
-
   @BeforeEach
   void setUp() {
     // batchSize : DB bulk insert 배치 사이즈 , retryCount : 외부 API 재시도 횟수
