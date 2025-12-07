@@ -3,8 +3,8 @@ package com.holidaykeeper.api.v1.Presentation.controller;
 import com.holidaykeeper.api.v1.Presentation.request.SearchHolidayRequest;
 import com.holidaykeeper.api.v1.Presentation.response.HolidayResponse;
 import com.holidaykeeper.api.v1.application.service.HolidayUsecase;
-import com.holidaykeeper.api.v1.common.ApiResponse;
-import com.holidaykeeper.api.v1.common.Pagination;
+import com.holidaykeeper.api.v1.common.dto.ApiResponse;
+import com.holidaykeeper.api.v1.common.dto.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/holiday")
+@RequestMapping("/api/v1/holidays")
 public class HolidayController {
 
   private final HolidayUsecase holidayUsecase;

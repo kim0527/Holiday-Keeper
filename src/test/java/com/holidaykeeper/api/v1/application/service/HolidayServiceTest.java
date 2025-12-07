@@ -11,7 +11,7 @@ import com.holidaykeeper.api.v1.Infrastructure.respoitory.country.CountryReposit
 import com.holidaykeeper.api.v1.Infrastructure.respoitory.holiday.HolidayRepository;
 import com.holidaykeeper.api.v1.Presentation.response.HolidayResponse;
 import com.holidaykeeper.api.v1.application.util.JsonUtil;
-import com.holidaykeeper.api.v1.common.Pagination;
+import com.holidaykeeper.api.v1.common.dto.Pagination;
 import com.holidaykeeper.api.v1.domain.Country;
 import com.holidaykeeper.api.v1.domain.Holiday;
 import com.holidaykeeper.api.v1.domain.HolidayType;

@@ -1,7 +1,7 @@
 package com.holidaykeeper.api.v1.application.service;
 
 import com.holidaykeeper.api.v1.Presentation.response.HolidayResponse;
-import com.holidaykeeper.api.v1.common.Pagination;
+import com.holidaykeeper.api.v1.common.dto.Pagination;
 import java.util.Optional;
 
 public interface HolidayUsecase {

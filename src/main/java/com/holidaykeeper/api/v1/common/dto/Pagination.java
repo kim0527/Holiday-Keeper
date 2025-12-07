@@ -1,4 +1,4 @@
-package com.holidaykeeper.api.v1.common;
+package com.holidaykeeper.api.v1.common.dto;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
