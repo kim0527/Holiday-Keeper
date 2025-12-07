@@ -4,6 +4,11 @@ import com.holidaykeeper.api.v1.Presentation.response.HolidayResponse;
 import com.holidaykeeper.api.v1.common.dto.Pagination;
 import java.util.Optional;
 
+/**
+ * 공휴일(Holiday)와 관련된 Usecase 인터페이스
+ *
+ * @since 1.0
+ */
 public interface HolidayUsecase {
   Pagination<HolidayResponse> searchHoliday(
       Optional<Integer> year,
