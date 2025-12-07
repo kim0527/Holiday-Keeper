@@ -31,6 +31,9 @@ cd Holiday-Keeper
 ```
 ## ✅ `./gradlew clean test` 스크린샷
 
+<img height="800" alt="Image" src="https://github.com/user-attachments/assets/5b8473a9-b480-4ce6-8e9a-d962020c0c7d" />
+
+
 ## 📡 API 명세 요약
 
 ### 1. 공휴일 조회
