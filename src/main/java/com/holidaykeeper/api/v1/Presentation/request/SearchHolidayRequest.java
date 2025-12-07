@@ -9,7 +9,7 @@ public record SearchHolidayRequest(
     @Schema(description = "페이지 번호 (0부터 시작)", example = "0")
     Optional<Integer> page,
 
-    @Schema(description = "페이지 크기", example = "20")
+    @Schema(description = "페이지 크기", example = "10")
     Optional<Integer> size,
 
     @Schema(description = "정렬 기준", example = "date")
